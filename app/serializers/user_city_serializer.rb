@@ -1,5 +1,4 @@
 class UserCitySerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :name
   has_one :user
-  has_one :city
 end

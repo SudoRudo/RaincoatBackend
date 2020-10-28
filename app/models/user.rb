@@ -3,6 +3,5 @@ class User < ApplicationRecord
     validates :username, uniqueness: { case_sensitive: false }
     validates :default_city, presence: true
     has_many :user_cities
-    has_many :cities, through: :user_cities
     has_many :items
 end

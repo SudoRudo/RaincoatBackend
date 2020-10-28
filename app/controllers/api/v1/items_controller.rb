@@ -17,6 +17,10 @@ class Api::V1::ItemsController < ApplicationController
     end
 
     def destroy
+        itemtags = ItemTag.where(:item_id => params[:id])
+        itemoutfits = ItemOutfit.where(:item_id => params[:id])
+        itemtags.destroy_all
+        itemoutfits.destroy_all
         Item.destroy(params[:id])
     end
 

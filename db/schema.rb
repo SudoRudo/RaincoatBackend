@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_200500) do
+ActiveRecord::Schema.define(version: 2020_10_18_044650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 2020_10_13_200500) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "item_outfits", force: :cascade do |t|
+    t.bigint "outfit_id", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_item_outfits_on_item_id"
+    t.index ["outfit_id"], name: "index_item_outfits_on_outfit_id"
+  end
+
   create_table "item_tags", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "tag_id", null: false
@@ -60,6 +69,15 @@ ActiveRecord::Schema.define(version: 2020_10_13_200500) do
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
+  create_table "outfits", force: :cascade do |t|
+    t.string "name"
+    t.string "condition"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_outfits_on_user_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -68,10 +86,9 @@ ActiveRecord::Schema.define(version: 2020_10_13_200500) do
 
   create_table "user_cities", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "city_id", null: false
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["city_id"], name: "index_user_cities_on_city_id"
     t.index ["user_id"], name: "index_user_cities_on_user_id"
   end
 
@@ -84,9 +101,11 @@ ActiveRecord::Schema.define(version: 2020_10_13_200500) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "item_outfits", "items"
+  add_foreign_key "item_outfits", "outfits"
   add_foreign_key "item_tags", "items"
   add_foreign_key "item_tags", "tags"
   add_foreign_key "items", "users"
-  add_foreign_key "user_cities", "cities"
+  add_foreign_key "outfits", "users"
   add_foreign_key "user_cities", "users"
 end

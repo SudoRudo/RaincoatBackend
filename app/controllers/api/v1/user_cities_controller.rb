@@ -20,6 +20,6 @@ class Api::V1::UserCitiesController < ApplicationController
     private
     
     def user_city_params
-        params.require(:user_city).permit(:user_id, :city_id)
+        params.require(:user_city).permit(:user_id, :name)
     end
 end
